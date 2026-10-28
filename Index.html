@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepPlume-6000 | NOAA SBIR FY27 Proposal & Telemetry Package</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        abyssal: {
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            500: '#486581',
+                            700: '#243b53',
+                            800: '#102a43',
+                            900: '#0a1929',
+                            950: '#050d17'
+                        },
+                        tealtech: {
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            700: '#0e7490'
+                        },
+                        ambertrust: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- MathJax for equations -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            height: 280px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-abyssal-900 text-white border-b border-abyssal-800 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between py-3 gap-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-lg bg-tealtech-600 flex items-center justify-center font-mono font-extrabold text-white text-sm shadow">
+                        ML
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="font-bold text-base tracking-tight text-white">DeepPlume-6000</span>
+                            <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-ambertrust-500/20 text-ambertrust-400 border border-ambertrust-500/30">
+                                NOAA SBIR FY27
+                            </span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 font-mono">MLabs LLC | Uplink-402 &amp; TrustLink Benthic Telemetry</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Tabs -->
+                <nav class="flex flex-wrap gap-1.5">
+                    <button id="nav-overview" onclick="switchTab('overview')" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-mono transition bg-abyssal-800 text-tealtech-500 font-semibold">
+                        1. Overview
+                    </button>
+                    <button id="nav-sbir-trends" onclick="switchTab('sbir-trends')" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-mono transition text-slate-300 hover:bg-abyssal-800">
+                        2. SBIR Trends
+                    </button>
+                    <button id="nav-system-arch" onclick="switchTab('system-arch')" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-mono transition text-slate-300 hover:bg-abyssal-800">
+                        3. Architecture
+                    </button>
+                    <button id="nav-crypto-sim" onclick="switchTab('crypto-sim')" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-mono transition text-slate-300 hover:bg-abyssal-800">
+                        4. Simulators
+                    </button>
+                    <button id="nav-manufacturing" onclick="switchTab('manufacturing')" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-mono transition text-slate-300 hover:bg-abyssal-800">
+                        5. Manufacturing &amp; BOM
+                    </button>
+                    <button id="nav-execution" onclick="switchTab('execution')" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-mono transition text-slate-300 hover:bg-abyssal-800">
+                        6. Phase I Plan
+                    </button>
+                    <button id="nav-publishing" onclick="switchTab('publishing')" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-mono transition text-slate-300 hover:bg-abyssal-800">
+                        7. Publishing ($0)
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- MODULE 1: EXECUTIVE OVERVIEW -->
+        <section id="tab-overview" class="tab-content space-y-8">
+            <div class="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-tealtech-600 font-mono">Executive Proposal Synthesis</span>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-abyssal-900 mt-1">DeepPlume-6000: Secure Benthic Telemetry Network</h1>
+                    <p class="text-slate-600 mt-1 text-sm">
+                        Fusing 6,000-meter autonomous sediment plume profiling with cryptographically authenticated GOES DCS satellite telemetry.
+                    </p>
+                </div>
+
+                <div class="space-y-4 text-sm text-slate-700 leading-relaxed">
+                    <p>
+                        <strong>Strategic &amp; Regulatory Imperative:</strong> On April 24, 2025, Executive Order 14285, <em>"Unleashing America's Offshore Critical Minerals and Resources,"</em> directed federal agencies, led by NOAA, to accelerate seabed resource assessment while establishing rigorous environmental safeguards. Commercial extraction governed by the Deep Seabed Hard Mineral Resources Act (DSHMRA) of 1980 requires continuous monitoring of benthic sediment plumes utilizing the "best available technology".
+                    </p>
+                    <p>
+                        Simultaneously, an exhaustive audit of NOAA's SBIR program repository (143 historical Phase I awards from FY18–FY26) reveals two profound, un-competed technical vulnerabilities: <strong>(1) Zero funded awards addressing environmental monitoring technologies for offshore critical minerals</strong>, and <strong>(2) A complete absence of cybersecurity protocols for the GOES Data Collection System (DCS)</strong> as NOAA restores two-way commanding (DCPC) across 33,600 global platforms.
+                    </p>
+                </div>
+
+                <!-- Key Metrics Grid -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+                    <div class="bg-abyssal-50 border border-abyssal-100 p-4 rounded-xl text-center">
+                        <span class="text-xs font-semibold text-abyssal-500 uppercase tracking-wider font-mono">Depth Rating</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-abyssal-900 mt-1">6,000 m</div>
+                        <span class="text-xs text-slate-500 mt-1 block">600 Bar Titanium Gr. 5</span>
+                    </div>
+                    <div class="bg-tealtech-500/10 border border-tealtech-500/20 p-4 rounded-xl text-center">
+                        <span class="text-xs font-semibold text-tealtech-700 uppercase tracking-wider font-mono">Acoustic Profiling</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-tealtech-600 mt-1">70 m</div>
+                        <span class="text-xs text-slate-500 mt-1 block">600 kHz Phased Array ADCP</span>
+                    </div>
+                    <div class="bg-ambertrust-500/10 border border-ambertrust-500/20 p-4 rounded-xl text-center">
+                        <span class="text-xs font-semibold text-ambertrust-600 uppercase tracking-wider font-mono">Crypto Overhead</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-ambertrust-600 mt-1">&le; 0.21 s</div>
+                        <span class="text-xs text-slate-500 mt-1 block">48-bit Tag in 300 bps DCS</span>
+                    </div>
+                    <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-xl text-center">
+                        <span class="text-xs font-semibold text-emerald-700 uppercase tracking-wider font-mono">FEC Error Tolerance</span>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1">2.5 kb/s</div>
+                        <span class="text-xs text-slate-500 mt-1 block">Reed-Solomon RS(31,21)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Policy & Regulatory Pillars -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-8 h-8 rounded-md bg-abyssal-800 text-tealtech-500 font-mono font-bold flex items-center justify-center text-sm mb-3">01</div>
+                        <h3 class="font-bold text-abyssal-900 text-base">Executive Order 14285 Alignment</h3>
+                        <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                            Directs NOAA to deploy mapping assets (e.g., NOAA Ship <em>Rainier</em> and <em>Okeanos Explorer</em>) and establish baseline environmental monitoring frameworks for critical mineral seabed extraction across the U.S. Pacific EEZ.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-mono text-tealtech-600 font-medium">
+                        Mandate: Critical Mineral Security
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-8 h-8 rounded-md bg-abyssal-800 text-ambertrust-500 font-mono font-bold flex items-center justify-center text-sm mb-3">02</div>
+                        <h3 class="font-bold text-abyssal-900 text-base">DSHMRA &amp; ISA Regulatory Strictness</h3>
+                        <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                            Requires mining operators in international waters (e.g., Clarion-Clipperton Zone) to execute continuous sediment plume quantification under strict Environmental Impact Statements (EIS) and TCRs.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-mono text-ambertrust-600 font-medium">
+                        Compliance: 92-98% Benthic Plume Capture
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-8 h-8 rounded-md bg-abyssal-800 text-emerald-500 font-mono font-bold flex items-center justify-center text-sm mb-3">03</div>
+                        <h3 class="font-bold text-abyssal-900 text-base">GOES DCS / GeoXO Cybersecurity</h3>
+                        <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                            Solves CS2 v2.0 unauthenticated command vulnerabilities by integrating the vendor-neutral <strong>TrustLink</strong> shim with the <strong>Uplink-402</strong> transmitter to authenticate inbound satellite commands and prevent data spoofing.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-mono text-emerald-600 font-medium">
+                        Standard: Zero-Overhead AES-CMAC
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 2: STRATEGIC ANALYSIS OF NOAA SBIR TRENDS -->
+        <section id="tab-sbir-trends" class="tab-content space-y-8 hidden">
+            <div class="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-tealtech-600 font-mono">Data Intelligence &amp; Repository Audit</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-abyssal-900 mt-1">NOAA SBIR Program Trends (FY18–FY27)</h2>
+                    <p class="text-slate-600 mt-1 text-sm">
+                        An exhaustive review of 143 Phase I abstracts reveals distinct programmatic shifts away from broad climate modeling toward applied ocean economy, uncrewed platforms, satellite continuity, and hard economic outputs.
+                    </p>
+                </div>
+
+                <p class="text-sm text-slate-700 leading-relaxed mb-6">
+                    <strong>Programmatic Analysis Context:</strong> Historical award keyword tagging reveals that while Artificial Intelligence (33%) and low-cost sensor hardware (28%) enjoy steady funding, they have become baseline expectations rather than unique differentiators. Meanwhile, explicit priority domains such as 'Omics (6%), citizen science (6%), and cybersecurity for environmental telemetry (0 awards) remain severely under-filled. The FY26 selection pivot—where Topic 9.3 (Ocean Economy) captured 58% of awards following the administrative funding lapse—confirms that FY27 reviewers heavily favor proposals backed by clear commercialization drivers and national security imperatives.
+                </p>
+
+                <!-- Visual Charts Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="bg-slate-50 p-4 sm:p-6 rounded-xl border border-slate-200 flex flex-col justify-between">
+                        <div class="mb-2">
+                            <h3 class="font-bold text-sm sm:text-base text-abyssal-900">Historical Award Focus Area Distribution (FY20–FY26)</h3>
+                            <p class="text-xs text-slate-500">Keyword breakdown across n=143 Phase I awards</p>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chartSbirDistribution"></canvas>
+                        </div>
+                        <div class="mt-3 text-xs text-slate-500 text-center font-mono">
+                            ★ Indicates explicitly named focus area in official funding notices
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 sm:p-6 rounded-xl border border-slate-200 flex flex-col justify-between">
+                        <div class="mb-2">
+                            <h3 class="font-bold text-sm sm:text-base text-abyssal-900">FY26 Award Realignment Shift (Topic 9.3 Dominance)</h3>
+                            <p class="text-xs text-slate-500">Ocean Economy captured 11 of 19 total awards (58%)</p>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chartFy26Shift"></canvas>
+                        </div>
+                        <div class="mt-3 text-xs text-slate-500 text-center font-mono">
+                            Climate Mitigation (Topic 9.6) fell to just 1 single award (5%)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Un-competed Gap Matrix Table -->
+                <div class="mt-8 border-t border-slate-100 pt-6">
+                    <h3 class="font-bold text-base text-abyssal-900 mb-4">Strategic FY27 Un-Competed Gap Matrix</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs sm:text-sm text-slate-700 border-collapse">
+                            <thead>
+                                <tr class="bg-abyssal-900 text-white font-mono uppercase text-[11px] tracking-wider">
+                                    <th class="p-3 rounded-tl-lg">Priority Domain</th>
+                                    <th class="p-3">NOAA Priority Driver</th>
+                                    <th class="p-3">Existing Funded State</th>
+                                    <th class="p-3">Open Strategic Gap</th>
+                                    <th class="p-3 rounded-tr-lg">DeepPlume-6000 Fit</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 border-b border-slate-200">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-semibold text-abyssal-900">Satellite DCS Security</td>
+                                    <td class="p-3">GeoXO 468.8 MHz Two-Way Commanding (DCPC)</td>
+                                    <td class="p-3 text-slate-500">GOES DCS Transmitters (Microcom, Sutron)</td>
+                                    <td class="p-3 text-ambertrust-600 font-medium">Zero telemetry authentication or remote command protection</td>
+                                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-xs font-bold">100% (TrustLink Shim)</span></td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-semibold text-abyssal-900">Offshore Critical Minerals</td>
+                                    <td class="p-3">Executive Order 14285 Mandate</td>
+                                    <td class="p-3 text-slate-500">Zero funded awards FY18–FY26</td>
+                                    <td class="p-3 text-ambertrust-600 font-medium">Lack of low-cost, 6000m autonomous plume landers</td>
+                                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-xs font-bold">100% (BLN-6000 Lander)</span></td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 font-semibold text-abyssal-900">Real-Time Edge AI</td>
+                                    <td class="p-3">Deterministic Data Compression</td>
+                                    <td class="p-3 text-slate-500">Superficial "AI" labels in ~33% awards</td>
+                                    <td class="p-3 text-ambertrust-600 font-medium">Lack of in-situ mathematical acoustic backscatter transformation</td>
+                                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-tealtech-500/20 text-tealtech-700 font-mono text-xs font-bold">High (DSP Optimization)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 3: SYSTEM ARCHITECTURE & BENTHIC TELEMETRY PIPELINE -->
+        <section id="tab-system-arch" class="tab-content space-y-8 hidden">
+            <div class="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-s
